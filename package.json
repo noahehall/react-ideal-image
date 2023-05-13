@@ -2,11 +2,12 @@
   "name": "react-ideal-image",
   "version": "0.0.0-semantically-released",
   "description": "Adaptive image component",
-  "main": "dist/index.js",
+  "module": "dist/index.js",
   "typings": "index.d.ts",
   "scripts": {
     "add-contributor": "kcd-scripts contributors add",
-    "build": "bun build src/index.tsx --outdir ./dist",
+    "build": "rm -rf ./dist/* && bun build src/index.tsx --outdir ./dist",
+    "bun:upgrade": "bun upgrade --canary",
     "check:upgrades": "bunx ncu -u",
     "deploy": "echo 'gh-pages -d storybook or something like that",
     "lint": "kcd-scripts lint",
@@ -23,14 +24,22 @@
   "keywords": [],
   "author": "stereobooster <stereobooster@gmail.com>",
   "license": "MIT",
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-waypoint": "^10.3.0"
+  },
   "devDependencies": {
     "@types/react": "^18.2.6",
     "@types/react-test-renderer": "^18.0.0",
-    "bun-types": "^0.5.8",
+    "bun-types": "canary",
     "gh-pages": "5.0.0",
     "kcd-scripts": "13.0.0",
     "npm-check-updates": "16.10.12",
     "react": "^18.2.0",
+    "react-cosmos": "next",
+    "react-cosmos-core": "^6.0.0-alpha.0",
+    "react-cosmos-dom": "next",
     "react-dom": "^18.2.0",
     "react-test-renderer": "^18.2.0",
     "react-waypoint": "^10.3.0",
@@ -59,5 +68,8 @@
   "bugs": {
     "url": "https://github.com/stereobooster/react-ideal-image/issues"
   },
-  "homepage": "https://github.com/stereobooster/react-ideal-image#readme"
+  "homepage": "https://github.com/stereobooster/react-ideal-image#readme",
+  "dependencies": {
+    "@ladle/react": "^2.12.3"
+  }
 }

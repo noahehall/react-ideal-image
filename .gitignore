@@ -12,3 +12,7 @@ styleguide
 package-lock.json
 yarn.lock
 yarn-error.log
+
+# cosmos
+cosmos.imports.ts
+cosmos

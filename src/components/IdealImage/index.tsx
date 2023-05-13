@@ -1,8 +1,8 @@
 import React, {useState, useEffect, type FC} from 'react'
-import { Waypoint } from 'react-waypoint'
+import {Waypoint} from 'react-waypoint'
 
 import Media from '../Media'
-import { icons, loadStates } from '../constants'
+import {icons, loadStates} from '../constants'
 import {xhrLoader, imageLoader, timeout, combineCancel} from '../loaders'
 import {
   guessMaxImageWidth,
@@ -112,7 +112,7 @@ const IdealImage: FC<ImageProps> = ({
   shouldAutoDownload = defaultShouldAutoDownload,
   threshold,
 }) => {
-    // TODO: validate props.srcSet
+  // TODO: validate props.srcSet
   const [state, setState] = useState({
     // new
     dimensions: {}, // TODO(noah): comes from Media
@@ -121,21 +121,21 @@ const IdealImage: FC<ImageProps> = ({
     pickedSrc: {},
     // prev
     loadState: initial,
-      connection: nativeConnection
-        ? {
-            downlink: navigator.connection.downlink, // megabits per second
-            rtt: navigator.connection.rtt, // ms
-            effectiveType: navigator.connection.effectiveType, // 'slow-2g', '2g', '3g', or '4g'
-          }
-        : null,
-      onLine: true,
-      overThreshold: false,
-      inViewport: false,
-      userTriggered: false,
-      possiblySlowNetwork: false,
+    connection: nativeConnection
+      ? {
+          downlink: navigator.connection.downlink, // megabits per second
+          rtt: navigator.connection.rtt, // ms
+          effectiveType: navigator.connection.effectiveType, // 'slow-2g', '2g', '3g', or '4g'
+        }
+      : null,
+    onLine: true,
+    overThreshold: false,
+    inViewport: false,
+    userTriggered: false,
+    possiblySlowNetwork: false,
   })
 
-  const [withLoader, setLoader] = useState<null | Record<string, any>>();
+  const [withLoader, setLoader] = useState<null | Record<string, any>>()
 
   const updateConnection = () => {
     if (!navigator.onLine) return
@@ -151,7 +151,7 @@ const IdealImage: FC<ImageProps> = ({
     }
   }
 
-  const possiblySlowNetworkListener = (e) => {
+  const possiblySlowNetworkListener = e => {
     if (state.loadState !== initial) return
 
     const {possiblySlowNetwork} = e.detail
@@ -160,20 +160,22 @@ const IdealImage: FC<ImageProps> = ({
     }
   }
 
-  const updateOnlineStatus = () => setState({...state, onLine: navigator.onLine})
+  const updateOnlineStatus = () =>
+    setState({...state, onLine: navigator.onLine})
 
-   const onClick = () => {
+  const onClick = () => {
     const {loadState, onLine, overThreshold} = state
     if (!onLine) return
     switch (loadState) {
       case loading:
         if (overThreshold) cancel(true)
-        break;
+        break
       case initial:
       case error:
         load(true)
         break
-      case loaded: break;
+      case loaded:
+        break
       default:
         throw new Error(`Wrong state: ${loadState}`)
     }
@@ -186,7 +188,7 @@ const IdealImage: FC<ImageProps> = ({
     }
   }
 
-  const cancel = (userTriggered)  =>{
+  const cancel = userTriggered => {
     if (loading !== state.loadState) return
     clear()
     loadStateChange(initial, userTriggered)
@@ -210,8 +212,7 @@ const IdealImage: FC<ImageProps> = ({
     // if (ssr || loaded === loadState || loading === loadState) return
     loadStateChange(loading, userTriggered)
 
-    const newLoader =
-      loader === 'xhr' ? xhrLoader(url) : imageLoader(url)
+    const newLoader = loader === 'xhr' ? xhrLoader(url) : imageLoader(url)
 
     newLoader
       .then(() => {
@@ -232,11 +233,11 @@ const IdealImage: FC<ImageProps> = ({
 
       timeoutLoader.then(() => {
         if (!withLoader) return
-          window.document.dispatchEvent(
-            new CustomEvent('possiblySlowNetwork', {
-              detail: {possiblySlowNetwork: true},
-            }),
-          )
+        window.document.dispatchEvent(
+          new CustomEvent('possiblySlowNetwork', {
+            detail: {possiblySlowNetwork: true},
+          }),
+        )
         setState({...state, overThreshold: true})
         if (!state.userTriggered) cancel(true)
       })
@@ -249,7 +250,7 @@ const IdealImage: FC<ImageProps> = ({
   const onEnter = () => {
     if (state.inViewport) return
 
-    setState({ ...state, inViewport: true })
+    setState({...state, inViewport: true})
 
     const pickedSrc = selectSrc({
       srcSet: srcSet,
@@ -273,7 +274,7 @@ const IdealImage: FC<ImageProps> = ({
 
   const onLeave = () => {
     if (state.loadState === loading && !state.userTriggered) {
-      setState({ ...state, inViewport: false})
+      setState({...state, inViewport: false})
       cancel(false)
     }
   }
@@ -282,7 +283,10 @@ const IdealImage: FC<ImageProps> = ({
     if (nativeConnection)
       navigator.connection.addEventListener('onchange', updateConnection)
     else if (threshold)
-      window.document.addEventListener('possiblySlowNetwork', possiblySlowNetworkListener)
+      window.document.addEventListener(
+        'possiblySlowNetwork',
+        possiblySlowNetworkListener,
+      )
     updateOnlineStatus()
     window.addEventListener('online', updateOnlineStatus)
     window.addEventListener('offline', updateOnlineStatus)
@@ -292,7 +296,10 @@ const IdealImage: FC<ImageProps> = ({
       if (nativeConnection)
         navigator.connection.removeEventListener('onchange', updateConnection)
       else if (threshold)
-        window.document.removeEventListener('possiblySlowNetwork',possiblySlowNetworkListener)
+        window.document.removeEventListener(
+          'possiblySlowNetwork',
+          possiblySlowNetworkListener,
+        )
       window.removeEventListener('online', updateOnlineStatus)
       window.removeEventListener('offline', updateOnlineStatus)
     }
@@ -309,37 +316,37 @@ const IdealImage: FC<ImageProps> = ({
   //   }
   // }
 
+  const icon = getIcon(state)
+  const message = getMessage(icon, state)
+  const useProps = {
+    getIcon,
+    getMessage,
+    getUrl,
+    height,
+    icons,
+    loader,
+    placeholder,
+    shouldAutoDownload,
+    srcSet,
+    theme,
+    threshold,
+    width,
+  }
 
-    const icon = getIcon(state)
-    const message = getMessage(icon, state)
-    const useProps = {
-      getIcon,
-      getMessage,
-      getUrl,
-      height,
-      icons,
-      loader,
-      placeholder,
-      shouldAutoDownload,
-      srcSet,
-      theme,
-      threshold,
-      width,
-    }
-
-    return (
-      <Waypoint onEnter={onEnter} onLeave={onLeave}>
-        <Media
-          {...useProps}
-          {...fallbackParams(useProps)}
-          onClick={onClick}
-          icon={icon}
-          src={state.url}
-          onDimensions={dimensions => setState({dimensions})}
-          message={message}
-        />
-      </Waypoint>
-    )
+  console.info('\n\n rendering with props', useProps)
+  return (
+    <Waypoint onEnter={onEnter} onLeave={onLeave}>
+      <Media
+        {...useProps}
+        {...fallbackParams(useProps)}
+        onClick={onClick}
+        icon={icon}
+        src={state.url}
+        onDimensions={dimensions => setState({dimensions})}
+        message={message}
+      />
+    </Waypoint>
+  )
 }
 
-export default IdealImage;
+export default IdealImage
