@@ -115,17 +115,26 @@ export const selectSrc = ({srcSet, maxImageWidth, supportsWebp}) => {
   let widths = supportedFormat.filter(x => x.width >= maxImageWidth)
   if (widths.length === 0) {
     widths = supportedFormat
-    width = Math.max.apply(null, widths.map(x => x.width))
+    width = Math.max.apply(
+      null,
+      widths.map(x => x.width),
+    )
   } else {
-    width = Math.min.apply(null, widths.map(x => x.width))
+    width = Math.min.apply(
+      null,
+      widths.map(x => x.width),
+    )
   }
   return supportedFormat.filter(x => x.width === width)[0]
 }
 
 export const fallbackParams = ({srcSet, getUrl}) => {
-  if (!ssr) return {}
   const notWebp = srcSet.filter(x => !isWebp(x))
   const first = notWebp[0]
+
+  // TODO(noah): required to pass test
+  if (!ssr || !first) return {}
+
   return {
     nsSrcSet: notWebp
       .map(x => `${getUrl ? getUrl(x) : x.src} ${x.width}w`)

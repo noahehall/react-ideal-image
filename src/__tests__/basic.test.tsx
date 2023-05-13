@@ -1,5 +1,5 @@
 import * as React from 'react'
-import IdealImage from '../../'
+import IdealImage from '../'
 
 interface Props {}
 interface State {}

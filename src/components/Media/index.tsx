@@ -1,16 +1,21 @@
-import React, {useEffect, useState, type FC} from 'react'
+import React, { useEffect, useState, type FC } from 'react'
+
 import compose from '../composeStyle'
 import {icons as defaultIcons} from '../constants'
+import defaultTheme from '../theme'
 
 const {load, loading, loaded, error, noicon, offline} = defaultIcons
 
 const Media: FC<MediaProps> = ({
   iconColor = '#fff',
   iconSize = 64,
-  ...props,
+  icons = defaultIcons,
+  theme = defaultTheme,
+  ...props
 }) => {
   const [dimensionElement, setDimensionElement] = useState<SVGSVGElement | null>(null)
-  const renderIcon = (useProps) {
+
+  const renderIcon = (useProps) => {
     const {icon, icons, iconColor: fill, iconSize: size, theme} = useProps
     const iconToRender = icons[icon]
 
@@ -39,7 +44,7 @@ const Media: FC<MediaProps> = ({
       />
     ) : (
       <svg
-        {...compose(useProps.theme.img)}
+          {...compose(useProps.theme?.img ?? {})} // TODO(noah): shouldnt be undefined
         width={useProps.width}
         height={useProps.height}
         ref={ref => (setDimensionElement(ref))}
@@ -47,19 +52,16 @@ const Media: FC<MediaProps> = ({
     )
   }
 
-  const renderNoscript = (props) => {
-    return props.ssr ? (
+  const renderNoscript = (useProps) => {
+    return useProps.ssr ? (
       <noscript>
         <img
-          {...compose(
-            props.theme.img,
-            props.theme.noscript,
-          )}
-          src={props.nsSrc}
-          srcSet={props.nsSrcSet}
-          alt={props.alt}
-          width={props.width}
-          height={props.height}
+          {...compose(useProps.theme.img, useProps.theme.noscript)}
+          src={useProps.nsSrc}
+          srcSet={useProps.nsSrcSet}
+          alt={useProps.alt}
+          width={useProps.width}
+          height={useProps.height}
         />
       </noscript>
     ) : null
@@ -82,32 +84,34 @@ const Media: FC<MediaProps> = ({
   const useProps = {
     iconColor,
     iconSize,
+    icons,
+    theme,
     ...props
   }
-  const {placeholder, theme} = useProps
+
   let background
   if (useProps.icon === loaded) {
     background = {}
-  } else if (placeholder.lqip) {
+  } else if (useProps.placeholder.lqip) {
     background = {
-      backgroundImage: `url("${placeholder.lqip}")`,
+      backgroundImage: `url("${useProps.placeholder.lqip}")`,
     }
   } else {
     background = {
-      backgroundColor: placeholder.color,
+      backgroundColor: useProps.placeholder.color,
     }
   }
 
   return (
     <div
       {...compose(
-        theme.placeholder,
+        useProps.theme.placeholder,
         background,
         useProps.style,
         useProps.className,
       )}
       onClick={useProps.onClick}
-      onKeyPress={useProps.onClick}
+      onKeyPress={useProps.onClick} // TODO(noah): deprecated
       ref={useProps.innerRef}
     >
       {renderImage(useProps)}

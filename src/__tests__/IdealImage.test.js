@@ -1,12 +1,18 @@
+import {expect, describe, test} from 'bun:test'
+
 import React from 'react'
 import renderer from 'react-test-renderer'
-import IdealImageWithDefaults from '../components/IdealImageWithDefaults/index'
+import IdealImage from '../components/IdealImage/index'
 
-describe('IdealImageWithDefaults', () => {
-  it('Renders a snapshot that is good', () => {
+describe('IdealImage', () => {
+  // TODO(noah): @see https://github.com/oven-sh/bun/issues/198
+  test.skip('Renders a snapshot that is good', () => {
     const comp = renderer
       .create(
-        <IdealImageWithDefaults
+        <IdealImage
+          icon="icon-file"
+          icons={{}}
+          theme={{}}
           placeholder={{color: 'blue'}}
           srcSet={[
             {
