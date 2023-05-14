@@ -1,9 +1,15 @@
 {
-  "name": "react-ideal-image",
-  "version": "0.0.0-semantically-released",
+  "author": "stereobooster <stereobooster@gmail.com>",
   "description": "Adaptive image component",
-  "module": "dist/index.js",
-  "typings": "index.d.ts",
+  "homepage": "https://github.com/stereobooster/react-ideal-image#readme",
+  "keywords": [],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "src/index.tsx",
+  "name": "react-ideal-image",
+  "type": "module",
+  "typings": "global.d.ts",
+  "version": "0.0.0-semantically-released",
   "scripts": {
     "add-contributor": "kcd-scripts contributors add",
     "build": "rm -rf ./dist/* && bun build src/index.tsx --outdir ./dist",
@@ -11,7 +17,7 @@
     "check:upgrades": "bunx ncu -u",
     "deploy": "echo 'gh-pages -d storybook or something like that",
     "lint": "kcd-scripts lint",
-    "precommit": "kcd-scripts precommit",
+    "precommitttt": "kcd-scripts precommit",
     "predeploy": "echo 'storybook build'",
     "setup": "bun install && bun run validate -s",
     "test:update": "bun test --update-snapshots",
@@ -21,9 +27,6 @@
   "files": [
     "dist"
   ],
-  "keywords": [],
-  "author": "stereobooster <stereobooster@gmail.com>",
-  "license": "MIT",
   "peerDependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -67,9 +70,5 @@
   },
   "bugs": {
     "url": "https://github.com/stereobooster/react-ideal-image/issues"
-  },
-  "homepage": "https://github.com/stereobooster/react-ideal-image#readme",
-  "dependencies": {
-    "@ladle/react": "^2.12.3"
   }
 }

@@ -16,7 +16,7 @@ export const nativeConnection = !ssr && !!window.navigator.connection
 // }
 // export const screenWidth = getScreenWidth()
 
-export const guessMaxImageWidth = (dimensions, w) => {
+export const guessMaxImageWidth = (dimensions, w?) => {
   if (ssr) return 0
 
   // Default to window object but don't use window as a default
