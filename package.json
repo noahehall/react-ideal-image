@@ -2,7 +2,8 @@
   "name": "react-ideal-image",
   "version": "0.0.0-semantically-released",
   "description": "Adaptive image component",
-  "module": "dist/index.js",
+  "main": "dist/index.js",
+  "module": "src/index.tsx",
   "typings": "index.d.ts",
   "scripts": {
     "add-contributor": "kcd-scripts contributors add",
@@ -11,7 +12,7 @@
     "check:upgrades": "bunx ncu -u",
     "deploy": "echo 'gh-pages -d storybook or something like that",
     "lint": "kcd-scripts lint",
-    "precommit": "kcd-scripts precommit",
+    "precommitttt": "kcd-scripts precommit",
     "predeploy": "echo 'storybook build'",
     "setup": "bun install && bun run validate -s",
     "test:update": "bun test --update-snapshots",
