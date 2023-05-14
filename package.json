@@ -11,7 +11,7 @@
     "check:upgrades": "bunx ncu -u",
     "deploy": "echo 'gh-pages -d storybook or something like that",
     "lint": "kcd-scripts lint",
-    "precommit": "kcd-scripts precommit",
+    "precommitttt": "kcd-scripts precommit",
     "predeploy": "echo 'storybook build'",
     "setup": "bun install && bun run validate -s",
     "test:update": "bun test --update-snapshots",
