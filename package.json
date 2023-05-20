@@ -69,8 +69,5 @@
   "bugs": {
     "url": "https://github.com/stereobooster/react-ideal-image/issues"
   },
-  "homepage": "https://github.com/stereobooster/react-ideal-image#readme",
-  "dependencies": {
-    "@ladle/react": "^2.12.3"
-  }
+  "homepage": "https://github.com/stereobooster/react-ideal-image#readme"
 }
