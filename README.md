@@ -7,7 +7,7 @@
 
 - uses the bun runtime and is a complete refactor
 - no support for legacy browsers
-- framer-motion is now a peer-dependency
+- framer-motion replaces react-waypoint
 
 ```sh
 bun add github:noahehall/react-idealer-image
@@ -18,9 +18,10 @@ import { IdealImage } from "react-idealer-image";
 
 const App = () => (
   <IdealImage
+    motionProps={} /* see framer-motion docs */
     alt="ideal image"
-    srcSet={[{ src: "some/image.webp", width: 3500 }]}
-    width={3500}
+    srcSet={[{ src: "some/image.webp" }]}
+    width={'100%'}
   />
 );
 ```
